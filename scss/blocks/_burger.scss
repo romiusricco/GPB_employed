@@ -5,26 +5,67 @@
   background-color: transparent;
   padding: 0;
   border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 32px;
   width: 32px;
   position: relative;
-  z-index: 20;
-  $root: &;
+  z-index: 101;
+  cursor: pointer;
 
-  .header--open & {
-    #{$root}__icon--open {
-      display: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__menu {
+    position: relative;
+    width: 0;
+    height: 0;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      width: 32px;
+      height: 2px;
+      background-color: $color-black;
+      border-radius: 10px;
+      transform: translateX(-50%);
+
+      // Только top и transform анимируются
+      transition:
+        top 0.3s ease-in 0.3s,
+        transform 0.3s ease-in;
     }
 
-    #{$root}__icon--close {
-      display: flex;
+    &::before {
+      top: -5px;
+    }
+
+    &::after {
+      top: 5px;
     }
   }
 
-  &__icon--close {
-    display: none;
+  &.is-open .burger__menu {
+    background-color: transparent;
+
+    &::before,
+    &::after {
+      background-color: $color-black;
+      top: 0;
+
+      // Меняем порядок задержек
+      transition:
+        top 0.3s ease-in,
+        transform 0.3s ease-in 0.3s;
+    }
+
+    &::before {
+      transform: translateX(-50%) rotate(-45deg);
+    }
+
+    &::after {
+      transform: translateX(-50%) rotate(45deg);
+    }
   }
 }

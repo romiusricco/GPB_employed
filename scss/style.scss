@@ -8,10 +8,10 @@
 @use "global/container";
 @use "global/visually-hidden";
 
-
 /* Blocks */
 /* ------------------------------------ */
 @use "blocks/header";
+@use "blocks/nav-overlay";
 @use "blocks/burger";
 @use "blocks/hero";
 @use "blocks/job-motivation";

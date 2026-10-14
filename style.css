@@ -324,6 +324,12 @@ template {
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -334,8 +340,11 @@ body {
   font-family: "Unbounded", "Arial", sans-serif;
   font-weight: 400;
   line-height: 24px;
-  color: #1E222E;
-  background-color: #F2F2F2;
+  color: #1e222e;
+  background-color: #f2f2f2;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
 
 main {
@@ -407,26 +416,231 @@ textarea {
   height: 12px;
 }
 
+.header__nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 920px;
+  box-sizing: border-box;
+  background: linear-gradient(171.29deg, #1919ef 0%, #060698 100%);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-100%);
+  transition-property: opacity, transform, visibility;
+  transition-duration: 0.4s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.header__nav-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.header__nav-close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  z-index: 101;
+  transition-property: opacity, transform;
+  transition-duration: 0.4s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.header__nav-close:hover {
+  opacity: 0.7;
+  transform: rotate(90deg);
+}
+.header__nav-close svg {
+  display: block;
+  stroke: #ffffff !important;
+  fill: none !important;
+  width: 32px;
+  height: 32px;
+}
+
+.header__nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: 100px;
+}
+
+.header__nav-item {
+  opacity: 0;
+  transform: translateX(-20px);
+  margin: 0;
+  padding: 0;
+  transition-property: opacity, transform;
+  transition-duration: 0.4s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.is-open .header__nav-item:nth-child(1) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.1s;
+  margin-top: 0;
+}
+.is-open .header__nav-item:nth-child(2) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.15s;
+  margin-top: 52px;
+}
+.is-open .header__nav-item:nth-child(3) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.2s;
+  margin-top: 52px;
+}
+.is-open .header__nav-item:nth-child(4) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.25s;
+  margin-top: 52px;
+}
+.is-open .header__nav-item:nth-child(5) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.3s;
+  margin-top: 52px;
+}
+
+.header__nav-link {
+  font-family: "Unbounded", "Arial", sans-serif;
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 36px;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+  display: block;
+  padding-left: 30px;
+  transition-property: opacity;
+  transition-duration: 0.4s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.header__nav-link:hover {
+  opacity: 0.7;
+}
+
+.header__nav-footer {
+  margin-top: auto;
+  padding: 30px;
+  padding-bottom: 40px;
+}
+
+.header__nav-logo {
+  display: block;
+  margin-bottom: 28px;
+}
+.header__nav-logo svg {
+  stroke: #ffffff !important;
+  fill: none !important;
+  width: 278px;
+  height: 14px;
+}
+
+.header__nav-copyright {
+  font-family: "Unbounded", "Arial", sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  color: #ffffff;
+  margin: 0 0 21px 0;
+  opacity: 0.8;
+}
+
+.header__nav-policy {
+  font-family: "Unbounded", "Arial", sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  color: #ffffff;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  display: block;
+  transition-property: opacity;
+  transition-duration: 0.4s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.header__nav-policy:hover {
+  opacity: 0.7;
+}
+
+.body-menu-open {
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .header__nav-overlay {
+    display: none;
+  }
+}
 .burger {
   background-color: transparent;
   padding: 0;
   border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 32px;
   width: 32px;
   position: relative;
-  z-index: 20;
+  z-index: 101;
+  cursor: pointer;
 }
-.header--open .burger .burger__icon--open {
-  display: none;
+.burger__menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background-color: #000000;
 }
-.header--open .burger .burger__icon--close {
-  display: flex;
+.burger__menu::before, .burger__menu::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 24px;
+  height: 4px;
+  background-color: inherit;
+  transform: translateX(-50%);
+  transition: top ease-in 0.3s, transform ease-in 0.3s 0.3s, background-color ease-in 0.3s;
 }
-.burger__icon--close {
-  display: none;
+.burger__menu::before {
+  top: -5px;
+}
+.burger__menu::after {
+  top: 5px;
+}
+.burger.is-open .burger__menu {
+  background-color: #ffffff;
+}
+.burger.is-open .burger__menu::before, .burger.is-open .burger__menu::after {
+  top: 0;
+  transition: top ease-in 0.3s 0.3s, transform ease-in 0.3s, background-color ease-in 0.3s;
+}
+.burger.is-open .burger__menu::before {
+  transform: translateX(-50%) rotate(-45deg);
+}
+.burger.is-open .burger__menu::after {
+  transform: translateX(-50%) rotate(45deg);
 }
 
 .hero {
@@ -439,13 +653,18 @@ textarea {
   display: flex;
   flex-direction: column;
 }
+@media (max-width: 767px) {
+  .hero__wrapper {
+    min-height: 1522px;
+  }
+}
 .hero__title {
   display: flex;
   flex-direction: column;
   font-size: 48px;
   line-height: 48px;
   text-transform: uppercase;
-  color: #1919EF;
+  color: #1919ef;
   margin: 0 0 60px 0;
 }
 .hero__title-bottom {
@@ -486,7 +705,7 @@ textarea {
 .job-motivation__title {
   font-size: 28px;
   line-height: 36px;
-  color: #1919EF;
+  color: #1919ef;
   margin: 0 0 32px 0;
 }
 .job-motivation__list {
@@ -548,7 +767,7 @@ textarea {
 .footer__link {
   font-size: 14px;
   line-height: 20px;
-  color: #1919EF;
+  color: #1919ef;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -10,6 +10,10 @@
     min-height: calc(100vh - 92px);
     display: flex;
     flex-direction: column;
+
+    @include vp-767 {
+      min-height: 1522px;
+    }
   }
 
   &__title {

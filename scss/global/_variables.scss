@@ -1,10 +1,10 @@
 // Colors
 $color-white: #ffffff;
-$color-white-smoke: #F2F2F2;
+$color-white-smoke: #f2f2f2;
 $color-dim-gray: #737373;
 $color-black: #000000;
-$color-black-russian: #1E222E;
-$color-blue: #1919EF;
+$color-black-russian: #1e222e;
+$color-blue: #1919ef;
 
 // Typography
 $ff-main: "Unbounded", "Arial", sans-serif;
@@ -15,3 +15,5 @@ $vp-mobile: 767px;
 
 // Animation
 $transition-300: ease-in 0.3s;
+$transition-duration: 0.4s;
+$transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
