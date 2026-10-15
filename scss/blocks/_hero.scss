@@ -10,6 +10,10 @@
     min-height: calc(100vh - 92px);
     display: flex;
     flex-direction: column;
+
+    @include vp-767 {
+      min-height: auto;
+    }
   }
 
   &__title {
@@ -47,6 +51,19 @@
     position: absolute;
     bottom: 0;
     right: -59px;
+
+    transform-box: fill-box; // вращаем вокруг геометрии самого SVG
+    transform-origin: center; // центр = центр круга
+    animation: circle-spin 10s linear infinite;
+  }
+
+  @keyframes circle-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   &__mouse-button {
@@ -57,5 +74,37 @@
     border: none;
     padding: 0;
     margin: auto auto 0;
+    animation: mouse-bounce 1.6s ease-in-out infinite; // Опционально: лёгкое покачивание всей мышки
+  }
+  &__mouse-wheel {
+    animation: mouse-wheel 1.6s ease-in-out infinite;
+  }
+
+  @keyframes mouse-wheel {
+    0% {
+      transform: translateY(0);
+      opacity: 0; // появляемся сверху невидимыми
+    }
+    15% {
+      opacity: 1; // плавно проявляемся на старте
+    }
+    60% {
+      transform: translateY(14px);
+      opacity: 1; // едем вниз видимыми
+    }
+    100% {
+      transform: translateY(18px);
+      opacity: 0; // гаснем у низа корпуса
+    }
+  }
+
+  @keyframes mouse-bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(6px);
+    }
   }
 }

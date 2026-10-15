@@ -1,0 +1,304 @@
+@use "../global/variables" as *;
+@use "../global/mixins" as *;
+
+// Кнопка закрытия (крестик)
+.header__nav-close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  z-index: 101;
+
+  &__lines {
+    position: relative;
+    width: 0;
+    height: 0;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      width: 32px;
+      height: 4px;
+      background-color: $color-white;
+      transform: translateX(-50%);
+
+      // Плавная анимация
+      transition:
+        transform $transition-500,
+        top $transition-300;
+    }
+
+    // Верхняя линия (поворот на 45deg)
+    &::before {
+      top: 0;
+      transform: translateX(-50%) rotate(45deg);
+    }
+
+    // Нижняя линия (поворот на -45deg)
+    &::after {
+      top: 0;
+      transform: translateX(-50%) rotate(-45deg);
+    }
+  }
+
+  // Эффект при наведении (опционально - можно убрать)
+  &:hover .close__lines::before,
+  &:hover .close__lines::after {
+    opacity: 0.8;
+  }
+}
+
+.header__nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; // Занимает всю ширину экрана
+  height: var(--overlay-height, 100vh); // Общая высота header + hero
+  box-sizing: border-box; // Важно!
+  background: linear-gradient(171.29deg, $color-blue 0%, #060698 100%);
+  z-index: 100;
+
+  // Начальное состояние - скрыто
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0);
+
+  transition-property: opacity, visibility;
+  transition-duration: $transition-duration;
+  transition-timing-function: $transition-timing-function;
+
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow-y: auto; // Разрешаем вертикальный скролл если контент не помещается
+  overflow-x: hidden; // Запрещаем горизонтальный скролл внутри меню
+}
+
+// Состояние открытого меню (без пробела!)
+.header__nav-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+// Кнопка закрытия — span вместо SVG
+.header__nav-close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 101;
+
+  .close__lines {
+    position: relative;
+    width: 0;
+    height: 0;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      width: 32px;
+      height: 4px;
+      background-color: $color-white;
+      border-radius: 10px;
+      transform: translateX(-50%);
+      // ЗАКРЫТИЕ: поворот сразу, разъезд с задержкой
+      transition:
+        transform $transition-500,
+        top $transition-300 0.3s;
+    }
+    &::before {
+      top: -5px;
+    }
+    &::after {
+      top: 5px;
+    }
+  }
+}
+
+// Крестик собирается в X синхронно с появлением оверлея
+.header__nav-overlay.is-open .header__nav-close .close__lines {
+  &::before,
+  &::after {
+    top: 0;
+    // ОТКРЫТИЕ: съезд в центр сразу, поворот с задержкой
+    transition:
+      top $transition-300,
+      transform $transition-500 0.3s;
+  }
+  &::before {
+    transform: translateX(-50%) rotate(-45deg);
+  }
+  &::after {
+    transform: translateX(-50%) rotate(45deg);
+  }
+}
+
+// Список навигации
+.header__nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: 100px; // Первый пункт на top: 100px
+}
+
+// Пункты меню
+.header__nav-item {
+  opacity: 0;
+  transform: translateX(-20px);
+  margin: 0;
+  padding: 0;
+
+  transition-property: opacity, transform;
+  transition-duration: $transition-duration;
+  transition-timing-function: $transition-timing-function;
+
+  &:nth-child(1) {
+    margin-top: 0;
+  }
+  &:nth-child(2) {
+    margin-top: 16px;
+  }
+  &:nth-child(3) {
+    margin-top: 16px;
+  }
+  &:nth-child(4) {
+    margin-top: 16px;
+  }
+  &:nth-child(5) {
+    margin-top: 16px;
+  }
+
+  // используем .is-open
+  .is-open &:nth-child(1) {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.1s;
+  }
+
+  .is-open &:nth-child(2) {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.15s;
+  }
+
+  .is-open &:nth-child(3) {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.2s;
+  }
+
+  .is-open &:nth-child(4) {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.25s;
+  }
+
+  .is-open &:nth-child(5) {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.3s;
+  }
+}
+
+// Ссылки навигации
+.header__nav-link {
+  font-family: $ff-main;
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 36px;
+  text-transform: uppercase;
+  color: $color-white;
+  text-decoration: none;
+  display: block;
+  padding-left: 30px;
+
+  transition-property: opacity;
+  transition-duration: $transition-duration;
+  transition-timing-function: $transition-timing-function;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+// Футер навигации
+.header__nav-footer {
+  margin-top: auto; // Прижимаем футер к низу
+  padding: 30px;
+  padding-bottom: 40px;
+}
+
+.header__nav-logo {
+  display: block;
+  margin-bottom: 28px;
+  color: $color-white;
+
+  svg {
+    width: 278px;
+    height: 14px;
+  }
+}
+
+.header__nav-copyright {
+  font-family: $ff-main;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  color: $color-white;
+  margin: 0 0 21px 0;
+  opacity: 0.8;
+}
+
+.header__nav-policy {
+  font-family: $ff-main;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  color: $color-white;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  display: block;
+
+  transition-property: opacity;
+  transition-duration: $transition-duration;
+  transition-timing-function: $transition-timing-function;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+// Блокировка прокрутки body при открытом меню
+.body-menu-open {
+  overflow: hidden;
+}
+
+// На больших экранах скрываем мобильное меню
+@media (min-width: 768px) {
+  .header__nav-overlay {
+    display: none;
+  }
+}

@@ -7,6 +7,13 @@
   box-sizing: border-box;
 }
 
+// Запрещаем горизонтальный скролл на уровне html и body
+html {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -19,6 +26,9 @@ body {
   line-height: 24px;
   color: $color-black-russian;
   background-color: $color-white-smoke;
+  overflow-x: hidden; // Запрещаем горизонтальный скролл
+  width: 100%;
+  max-width: 100vw;
 }
 
 main {
