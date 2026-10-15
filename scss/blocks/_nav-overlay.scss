@@ -1,39 +1,6 @@
 @use "../global/variables" as *;
 @use "../global/mixins" as *;
 
-.header__nav-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%; // Занимает всю ширину экрана
-  height: 920px; // Высота на мобильных устройствах
-  box-sizing: border-box; // Важно!
-  background: linear-gradient(171.29deg, $color-blue 0%, #060698 100%);
-  z-index: 100;
-
-  // Начальное состояние - скрыто (уезжает вверх)
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-100%);
-
-  transition-property: opacity, transform, visibility;
-  transition-duration: $transition-duration;
-  transition-timing-function: $transition-timing-function;
-
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  overflow-y: auto; // Разрешаем вертикальный скролл если контент не помещается
-  overflow-x: hidden; // Запрещаем горизонтальный скролл внутри меню
-}
-
-// Состояние открытого меню (без пробела!)
-.header__nav-overlay.is-open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
 // Кнопка закрытия (крестик)
 .header__nav-close {
   position: absolute;
@@ -50,21 +17,139 @@
   height: 32px;
   z-index: 101;
 
-  transition-property: opacity, transform;
+  &__lines {
+    position: relative;
+    width: 0;
+    height: 0;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      width: 32px;
+      height: 4px;
+      background-color: $color-white;
+      transform: translateX(-50%);
+
+      // Плавная анимация
+      transition:
+        transform 0.4s ease-in-out,
+        top 0.3s ease-in-out;
+    }
+
+    // Верхняя линия (поворот на 45deg)
+    &::before {
+      top: 0;
+      transform: translateX(-50%) rotate(45deg);
+    }
+
+    // Нижняя линия (поворот на -45deg)
+    &::after {
+      top: 0;
+      transform: translateX(-50%) rotate(-45deg);
+    }
+  }
+
+  // Эффект при наведении (опционально - можно убрать)
+  &:hover .close__lines::before,
+  &:hover .close__lines::after {
+    opacity: 0.8;
+  }
+}
+
+.header__nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; // Занимает всю ширину экрана
+  height: 920px; // Высота на мобильных устройствах
+  box-sizing: border-box; // Важно!
+  background: linear-gradient(171.29deg, $color-blue 0%, #060698 100%);
+  z-index: 100;
+
+  // Начальное состояние - скрыто
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0);
+
+  transition-property: opacity, visibility;
   transition-duration: $transition-duration;
   transition-timing-function: $transition-timing-function;
 
-  &:hover {
-    opacity: 0.7;
-    transform: rotate(90deg);
-  }
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow-y: auto; // Разрешаем вертикальный скролл если контент не помещается
+  overflow-x: hidden; // Запрещаем горизонтальный скролл внутри меню
+}
 
-  svg {
-    display: block;
-    stroke: $color-white !important;
-    fill: none !important;
-    width: 32px;
-    height: 32px;
+// Состояние открытого меню (без пробела!)
+.header__nav-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+// Кнопка закрытия — span вместо SVG
+.header__nav-close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 101;
+
+  .close__lines {
+    position: relative;
+    width: 0;
+    height: 0;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      width: 32px;
+      height: 4px;
+      background-color: $color-white;
+      border-radius: 10px;
+      transform: translateX(-50%);
+      // ЗАКРЫТИЕ: поворот сразу, разъезд с задержкой
+      transition:
+        transform ease-in-out 0.5s,
+        top $transition-300 0.3s;
+    }
+    &::before {
+      top: -5px;
+    }
+    &::after {
+      top: 5px;
+    }
+  }
+}
+
+// Крестик собирается в X синхронно с появлением оверлея
+.header__nav-overlay.is-open .header__nav-close .close__lines {
+  &::before,
+  &::after {
+    top: 0;
+    // ОТКРЫТИЕ: съезд в центр сразу, поворот с задержкой
+    transition:
+      top $transition-300,
+      transform ease-in-out 0.5s 0.3s;
+  }
+  &::before {
+    transform: translateX(-50%) rotate(-45deg);
+  }
+  &::after {
+    transform: translateX(-50%) rotate(45deg);
   }
 }
 
@@ -157,10 +242,9 @@
 .header__nav-logo {
   display: block;
   margin-bottom: 28px;
+  color: $color-white;
 
   svg {
-    stroke: $color-white !important;
-    fill: none !important;
     width: 278px;
     height: 14px;
   }

@@ -7,15 +7,13 @@
   border: none;
   height: 32px;
   width: 32px;
-  position: relative;
-  z-index: 101;
   cursor: pointer;
-
   display: flex;
   align-items: center;
   justify-content: center;
 
   &__menu {
+    background-color: transparent;
     position: relative;
     width: 0;
     height: 0;
@@ -26,15 +24,18 @@
       position: absolute;
       left: 50%;
       width: 32px;
-      height: 2px;
+      height: 4px;
       background-color: $color-black;
-      border-radius: 10px;
+
       transform: translateX(-50%);
 
-      // Только top и transform анимируются
+      // ЗАКРЫТИЕ (крестик -> линии)
+      // 1. Поворот (transform) начинается СРАЗУ и длится дольше (0.5s), чтобы его было видно
+      // 2. Разъезд (top) начинается с ЗАДЕРЖКОЙ 0.3s, когда поворот уже почти завершен
       transition:
-        top 0.3s ease-in 0.3s,
-        transform 0.3s ease-in;
+        background-color $transition-300,
+        transform $transition-500,
+        top $transition-300 0.3s;
     }
 
     &::before {
@@ -51,13 +52,16 @@
 
     &::before,
     &::after {
-      background-color: $color-black;
+      background-color: $color-white;
       top: 0;
 
-      // Меняем порядок задержек
+      // ОТКРЫТИЕ (линии -> крестик)
+      // 1. Съезд в центр (top) происходит СРАЗУ (0.3s)
+      // 2. Поворот (transform) начинается с ЗАДЕРЖКОЙ 0.3s и длится 0.5s для плавности
       transition:
-        top 0.3s ease-in,
-        transform 0.3s ease-in 0.3s;
+        background-color $transition-300,
+        top $transition-300,
+        transform $transition-500 0.3s;
     }
 
     &::before {
