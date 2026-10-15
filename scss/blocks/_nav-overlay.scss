@@ -34,8 +34,8 @@
 
       // Плавная анимация
       transition:
-        transform 0.4s ease-in-out,
-        top 0.3s ease-in-out;
+        transform $transition-500,
+        top $transition-300;
     }
 
     // Верхняя линия (поворот на 45deg)
@@ -123,7 +123,7 @@
       transform: translateX(-50%);
       // ЗАКРЫТИЕ: поворот сразу, разъезд с задержкой
       transition:
-        transform ease-in-out 0.5s,
+        transform $transition-500,
         top $transition-300 0.3s;
     }
     &::before {
@@ -143,7 +143,7 @@
     // ОТКРЫТИЕ: съезд в центр сразу, поворот с задержкой
     transition:
       top $transition-300,
-      transform ease-in-out 0.5s 0.3s;
+      transform $transition-500 0.3s;
   }
   &::before {
     transform: translateX(-50%) rotate(-45deg);
@@ -174,40 +174,51 @@
   transition-duration: $transition-duration;
   transition-timing-function: $transition-timing-function;
 
-  // ИСПРАВЛЕНО: используем .is-open вместо .header--open
+  &:nth-child(1) {
+    margin-top: 0;
+  }
+  &:nth-child(2) {
+    margin-top: 16px;
+  }
+  &:nth-child(3) {
+    margin-top: 16px;
+  }
+  &:nth-child(4) {
+    margin-top: 16px;
+  }
+  &:nth-child(5) {
+    margin-top: 16px;
+  }
+
+  // используем .is-open
   .is-open &:nth-child(1) {
     opacity: 1;
     transform: translateX(0);
     transition-delay: 0.1s;
-    margin-top: 0;
   }
 
   .is-open &:nth-child(2) {
     opacity: 1;
     transform: translateX(0);
     transition-delay: 0.15s;
-    margin-top: 52px;
   }
 
   .is-open &:nth-child(3) {
     opacity: 1;
     transform: translateX(0);
     transition-delay: 0.2s;
-    margin-top: 52px;
   }
 
   .is-open &:nth-child(4) {
     opacity: 1;
     transform: translateX(0);
     transition-delay: 0.25s;
-    margin-top: 52px;
   }
 
   .is-open &:nth-child(5) {
     opacity: 1;
     transform: translateX(0);
     transition-delay: 0.3s;
-    margin-top: 52px;
   }
 }
 
