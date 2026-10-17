@@ -4,24 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const navOverlay = document.querySelector(".header__nav-overlay");
   const navLinks = document.querySelectorAll(".header__nav-link");
   const body = document.body;
-  const header = document.querySelector(".header");
-  const hero = document.querySelector(".hero"); // Вся секция hero
   const mouseButton = document.querySelector(".hero__mouse-button");
 
-  // Вычисляем общую высоту: header + hero
-  const updateOverlayDimensions = () => {
-    const headerHeight = header.offsetHeight;
-    const heroHeight = hero.offsetHeight;
-    const totalHeight = headerHeight + heroHeight;
-
-    document.documentElement.style.setProperty(
-      "--overlay-height",
-      `${totalHeight}px`,
-    );
-  };
-
   const openMenu = () => {
-    updateOverlayDimensions(); // Обновляем перед открытием
     navOverlay.classList.add("is-open");
     burger.classList.add("is-open");
     body.classList.add("body-menu-open");
@@ -56,8 +41,4 @@ document.addEventListener("DOMContentLoaded", () => {
       .querySelector(".job-motivation")
       ?.scrollIntoView({ behavior: "smooth" });
   });
-
-  // Вычисляем при загрузке и ресайзе
-  updateOverlayDimensions();
-  window.addEventListener("resize", updateOverlayDimensions);
 });
