@@ -63,7 +63,8 @@
   top: 0;
   left: 0;
   width: 100%; // Занимает всю ширину экрана
-  height: var(--overlay-height, 100vh); // Общая высота header + hero
+  height: 100vh; // Полная высота окна
+  height: 100dvh; // Для мобильных с динамическим viewport
   box-sizing: border-box; // Важно!
   background: linear-gradient(171.29deg, $color-blue 0%, #060698 100%);
   z-index: 100;
@@ -155,6 +156,7 @@
 
 // Список навигации
 .header__nav-list {
+  flex-shrink: 0; // Запретить сжатие детей — иначе flex «съест» футер вместо скролла (это и есть причина обрезания текста)
   list-style: none;
   margin: 0;
   padding: 0;
@@ -245,6 +247,7 @@
 
 // Футер навигации
 .header__nav-footer {
+  flex-shrink: 0; // Запретить сжатие иначе flex «съест» футер вместо скролла (это и есть причина обрезания текста)
   margin-top: auto; // Прижимаем футер к низу
   padding: 30px;
   padding-bottom: 40px;
